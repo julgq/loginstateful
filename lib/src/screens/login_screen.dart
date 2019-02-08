@@ -12,6 +12,9 @@ class _LoginScreen extends State<LoginScreen> {
   // https://docs.flutter.io/flutter/widgets/FormState-class.html
   final formKey = GlobalKey<FormState>();
 
+  String email = '';
+  String password = '';
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -43,6 +46,10 @@ class _LoginScreen extends State<LoginScreen> {
           return 'Please enter a valid email';
         }
       },
+      onSaved: (value) {
+        print(value);
+        email = value;
+      },
     );
   }
 
@@ -58,6 +65,10 @@ class _LoginScreen extends State<LoginScreen> {
             return 'Password must be at least 4 characters';
           }
         },
+        onSaved: (value) {
+          print(value);
+          password = value;
+        },
       ),
     );
   }
@@ -68,7 +79,20 @@ class _LoginScreen extends State<LoginScreen> {
         child: Text('Submit'),
         onPressed: () {
           /* reinicia los campos del formulario */
-          formKey.currentState.reset();
+          //formKey.currentState.reset();
+
+          /* Validar formulario */
+          // regresara true si esta validado, si no false.
+          //print(formKey.currentState.validate());
+
+          if (formKey.currentState.validate()) {
+            // Guardar valores de inputs en el state del formulario.
+            formKey.currentState.save();
+
+            // take *both* email and password
+            // and post them to some API.
+            print(' Time to post $email and $password to my API');
+          }
         });
   }
 }
